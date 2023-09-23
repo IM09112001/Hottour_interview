@@ -1,5 +1,5 @@
 import ResizeObserver from "resize-observer-polyfill";
 
 if (!("ResizeObserver" in window)) {
-  window.ResizeObserver = ResizeObserver;
+  (window as any).ResizeObserver = ResizeObserver;
 }

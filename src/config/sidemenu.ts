@@ -14,6 +14,7 @@ export const sidemenu: IScaffold2Group[] = [
         label: "Dashboard",
         id: "dashboard",
         icon: HomeIcon,
+        
       },
       {
         label: "Todo list (decl)",

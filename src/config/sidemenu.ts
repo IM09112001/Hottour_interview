@@ -6,7 +6,7 @@ import HomeIcon from "@mui/icons-material/Home";
 
 export const sidemenu: IScaffold2Group[] = [
   {
-    id: "example_pages",
+        id: "example_pages",
     label: "Example Pages",
     icon: PublicIcon,
     children: [
@@ -17,15 +17,15 @@ export const sidemenu: IScaffold2Group[] = [
         
       },
       {
-        label: "Todo list (decl)",
-        id: "todos_list",
+        label: "Form generator app",
+        id: "users_list",
         icon: PlaylistAddCheckIcon,
       },
-      {
-        label: "Todo list (rad)",
-        id: "todos_card",
-        icon: PlaylistAddCheckIcon,
-      },
+      // {
+      //   label: "Another form generator",
+      //   id: "users_card",
+      //   icon: PlaylistAddCheckIcon,
+      // },
     ],
   },
 ];

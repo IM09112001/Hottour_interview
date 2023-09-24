@@ -93,7 +93,7 @@ const rowActions = [
 
 const heightRequest = () => window.innerHeight - 75;
 
-export const TodoListPage = () => {
+export const UserListPage = () => {
   const { setLoader } = useLoader();
 
   const handler = useArrayPaginator(
@@ -113,12 +113,12 @@ export const TodoListPage = () => {
   };
 
   const handleClick = (row: any) => {
-    history.push(`/todos_list/${row.id}`);
+    history.push(`/users_list/${row.id}`);
   };
 
   return (
     <List
-      title="Todo list"
+      title="User list"
       filterLabel="Filters"
       heightRequest={heightRequest}
       rowActions={rowActions}
@@ -134,4 +134,4 @@ export const TodoListPage = () => {
   );
 };
 
-export default TodoListPage;
+export default UserListPage;

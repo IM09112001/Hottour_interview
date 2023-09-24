@@ -16,7 +16,7 @@ import ITodoItem from "../../model/ITodoItem";
 
 import useLoader from "../../hooks/useLoader";
 
-interface ITodoRecordPageProps {
+interface IUserRecordPageProps {
   id: string;
 }
 
@@ -30,13 +30,13 @@ const updateFields: IField[] = [
 ];
 
 const cardActions: IActionTrigger[] = [
-    {
-        action: 'update-card',
-        label: 'Update todo',
-    },
+  {
+    action: 'update-card',
+    label: 'Update todo',
+  },
 ];
 
-export const TodoRecordPage = ({ id }: ITodoRecordPageProps) => {
+export const UserRecordPage = ({ id }: IUserRecordPageProps) => {
   const { setLoader } = useLoader();
 
   const { pickData, render } = useActionModal({
@@ -58,14 +58,14 @@ export const TodoRecordPage = ({ id }: ITodoRecordPageProps) => {
         {(todo) => (
           <>
             <Breadcrumbs
-              title="Todo list"
+              title="User list"
               subtitle={todo.title}
-              onBack={() => history.push("/todos_card")}
+              onBack={() => history.push("/users_card")}
             />
             <ActionTrigger
-                sx={{ mb: 1 }}
-                actions={cardActions}
-                onAction={pickData}
+              sx={{ mb: 1 }}
+              actions={cardActions}
+              onAction={pickData}
             />
             <RecordView data={todo} />
           </>
@@ -76,4 +76,4 @@ export const TodoRecordPage = ({ id }: ITodoRecordPageProps) => {
   );
 };
 
-export default TodoRecordPage;
+export default UserRecordPage;

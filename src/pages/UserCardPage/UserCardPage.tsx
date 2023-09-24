@@ -28,11 +28,11 @@ export const actions: ICardViewAction[] = [
   },
 ];
 
-export const TodoCardPage = () => {
+export const UserCardPage = () => {
   const { setLoader } = useLoader();
 
   const handleClick = (row: any) => {
-    history.push(`/todos_card/${row.id}`);
+    history.push(`/users_card/${row.id}`);
   };
 
   const handleOperation = (
@@ -70,4 +70,4 @@ export const TodoCardPage = () => {
   );
 };
 
-export default TodoCardPage;
+export default UserCardPage;

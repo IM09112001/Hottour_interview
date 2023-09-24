@@ -2,7 +2,7 @@ import { rest } from "msw";
 
 import { json } from "../helpers/mock";
 
-const todos = [
+const users = [
   {
     userId: 1,
     id: 1,
@@ -36,6 +36,6 @@ const todos = [
 ];
 
 export default [
-  rest.get("/users", json(todos)),
-  ...todos.map((todo) => rest.get(`/users/${todo.id}`, json(todo))),
+  rest.get("/users", json(users)),
+  ...users.map((user) => rest.get(`/users/${user.id}`, json(user))),
 ];

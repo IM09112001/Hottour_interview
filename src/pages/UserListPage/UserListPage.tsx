@@ -116,6 +116,8 @@ export const UserListPage = () => {
     history.push(`/users_list/${row.id}`);
   };
 
+
+
   return (
     <List
       title="User list"

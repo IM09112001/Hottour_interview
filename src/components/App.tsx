@@ -61,6 +61,7 @@ const App = observer(() => {
         history.push(sideMenuClickMap[path] || "/not-found");
       }}
     >
+
       <Switch
         Loader={Fragment}
         history={history}

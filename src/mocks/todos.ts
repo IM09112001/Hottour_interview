@@ -1,6 +1,7 @@
 import { rest } from "msw";
 
 import { json } from "../helpers/mock";
+// import IOneApi from "react-declarative/model/IOneApi";
 
 const users = [
   {
@@ -39,3 +40,17 @@ export default [
   rest.get("/users", json(users)),
   ...users.map((user) => rest.get(`/users/${user.id}`, json(user))),
 ];
+
+export const getUserInfo = async (id: string): Promise<any> => {
+  try {
+    const response = await fetch(`http://localhost:3000/users?id=${id}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error; // Rethrow the error so it can be handled elsewhere, if needed.
+  }
+};

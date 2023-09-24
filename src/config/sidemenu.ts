@@ -6,7 +6,7 @@ import HomeIcon from "@mui/icons-material/Home";
 
 export const sidemenu: IScaffold2Group[] = [
   {
-        id: "example_pages",
+    id: "example_pages",
     label: "Example Pages",
     icon: PublicIcon,
     children: [

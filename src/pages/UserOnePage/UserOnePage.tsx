@@ -10,7 +10,11 @@ import {
 import fetchApi from "../../helpers/fetchApi";
 import history from "../../helpers/history";
 
-import ITodoItem from "../../model/ITodoItem";
+
+import IUserInfo from "../../model/IUserInfo";
+import useLoader from "../../hooks/useLoader";
+import { notEqual } from "assert";
+
 
 interface IUserOnePageProps {
   id: string;
@@ -46,7 +50,8 @@ const fields: TypedField[] = [
           },
           {
             type: FieldType.Rating,
-
+            name: 'rating',
+            defaultValue: 3,
           }
         ]
       },
@@ -62,22 +67,26 @@ const fields: TypedField[] = [
 
           {
             type: FieldType.Combo,
-            name: 'gender',
-            title: 'Gender',
-            // freeSolo: true,
+            name: 'prefix',
+            title: 'Пол',
             async itemList() {
-              // await sleep(1e3);
               return [
                 'male-unique-key',
                 'female-unique-key',
+                'female-miss-unique-key',
+                'female-ms-unique-key',
               ];
             },
             async tr(current) {
               // await sleep(5e2);
               if (current === 'male-unique-key') {
-                return 'Male';
+                return 'Mr.';
               } else if (current === 'female-unique-key') {
-                return 'Female';
+                return 'Mrs.';
+              } else if (current === 'female-miss-unique-key') {
+                return 'Miss';
+              } else if (current === 'female-ms-unique-key') {
+                return 'Ms';
               } else {
                 return "";
               }
@@ -86,9 +95,39 @@ const fields: TypedField[] = [
           },
 
           {
-            type: FieldType.Items,
-            title: 'Lists',
-            itemList: ['1-item', '2-item', '3-item']
+            type: FieldType.Combo,
+            title: 'Списки',
+            name: 'suffix',
+            async itemList() {
+              return ['I', 'II', 'III', 'IV', 'V', 'VI', 'Sr.', 'PhD', 'MD', 'DDS'];
+            },
+            async tr(current) {
+              // await sleep(5e2);
+              if (current === 'I') {
+                return 'I';
+              } else if (current === 'II') {
+                return 'II';
+              } else if (current === 'III') {
+                return 'III';
+              } else if (current === 'IV') {
+                return 'IV';
+              } else if (current === 'V') {
+                return 'V';
+              } else if (current === 'VI') {
+                return 'VI';
+              } else if (current === 'Sr.') {
+                return 'Sr.';
+              } else if (current === 'PhD') {
+                return 'PhD';
+              } else if (current === 'MD') {
+                return 'MD';
+              } else if (current === 'DDS') {
+                return 'DDS';
+              } else {
+                return "";
+              }
+            },
+            defaultValue: 'their-unique-key',
           },
 
           {
@@ -101,16 +140,17 @@ const fields: TypedField[] = [
 
               {
                 type: FieldType.Text,
-                // field:"",
-                name: "userId",
+                // readonly: true,
+                name: "keyword",
                 title: "User id",
                 outlined: false,
-                defaultValue: "evrv",
+
+
               },
               {
                 type: FieldType.Checkbox,
                 fieldBottomMargin: "0",
-                name: "keyword",
+                name: "keywordChecked",
                 title: "keywords",
 
               },
@@ -130,45 +170,35 @@ const fields: TypedField[] = [
 
   {
     type: FieldType.Text,
-    name: "name",
+    name: "firstName",
     title: "name",
-    defaultValue: "John",
+    description: "name",
   },
 
   {
     type: FieldType.Text,
-    name: "surname",
+    name: "lastName",
     title: "surname",
-    defaultValue: "Doe",
+    description: "lastName",
   },
 
-  {
-    type: FieldType.Date,
-
-    title: "age",
-    defaultValue: 33469,
-  },
   {
     type: FieldType.Text,
-    name: "title",
-    title: "Title",
+    name: "age",
+    title: "age",
+    description: "42",
   },
 
   {
     type: FieldType.Expansion,
-    title: 'Podpiska',
-    description: 'Podpiske na uved',
+    title: 'Подписка',
+    description: 'Подписка на уведомление',
     fields: [
       {
         type: FieldType.Switch,
-        title: 'podpiska est',
-        name: 'yes',
+        title: 'Подписка есть',
+        name: 'subscribed',
         defaultValue: true,
-      },
-      {
-        type: FieldType.Switch,
-        title: 'Podpiska net',
-        name: 'No',
       },
     ],
   },
@@ -177,6 +207,17 @@ const fields: TypedField[] = [
     type: FieldType.Group,
 
     style: {},
+
+    // "email": "Bradford94@gmail.com",
+
+
+
+    // "phonenumber": "414.736.3825 x7282",
+
+
+
+
+
     fields: [
       {
         type: FieldType.Group,
@@ -188,22 +229,19 @@ const fields: TypedField[] = [
         fields: [
           {
             type: FieldType.Line,
-            title: "Work",
+            title: "Работа",
           },
 
           {
             type: FieldType.Text,
-            name: "position",
-            title: "position",
-            defaultValue: "front",
-
+            name: "jobTitle",
+            title: "Должность",
           },
 
           {
             type: FieldType.Text,
-            name: "work_address",
-            title: "work_adress",
-            defaultValue: "alscmlascm",
+            name: "jobArea",
+            title: "Место работы",
           },
         ]
       },
@@ -218,35 +256,31 @@ const fields: TypedField[] = [
         fields: [
           {
             type: FieldType.Line,
-            title: "Home",
+            title: "Домашний адрес",
           },
 
           {
             type: FieldType.Text,
             name: "country",
-            title: "country",
-            defaultValue: "uzb",
+            title: "Страна",
           },
 
           {
             type: FieldType.Text,
             name: "city",
-            title: "city",
-            defaultValue: "tash",
+            title: "Город",
           },
 
           {
             type: FieldType.Text,
-            name: "district",
-            title: "district",
-            defaultValue: "olm",
+            name: "state",
+            title: "обпасть",
           },
 
           {
             type: FieldType.Text,
             name: "address",
-            title: "address",
-            defaultValue: "qiwneofvwiefo",
+            title: "Адрес",
           },
         ]
       },
@@ -256,11 +290,24 @@ const fields: TypedField[] = [
 ];
 
 export const UserOnePage = ({ id }: IUserOnePageProps) => {
+
+  // const { setLoader } = useLoader();
+
+  // const fetchState = (
+  //   async () => await fetchApi("/users"),
+  //   {
+  //     onLoadStart: () => setLoader(true),
+  //     onLoadEnd: () => setLoader(false),
+  //   }
+  // );
+
   const fetchState = () => [
-    fetchApi<ITodoItem>(`/users/${id}`)
+    fetchApi<IUserInfo>(`/users/${id}`)
   ] as const;
 
   const Content = (props: any) => {
+
+
     const { data, oneProps, beginSave } = usePreventLeave({
       history,
       onSave: () => {
@@ -279,8 +326,8 @@ export const UserOnePage = ({ id }: IUserOnePageProps) => {
           onBack={() => history.push("/users_list")}
           saveDisabled={!data}
         />
-        <One<ITodoItem>
-          handler={() => props.todo}
+        <One<IUserInfo>
+          handler={() => props.data}
           fields={fields}
           {...oneProps}
         />
@@ -290,7 +337,7 @@ export const UserOnePage = ({ id }: IUserOnePageProps) => {
 
   return (
     <FetchView state={fetchState}>
-      {(todo) => <Content todo={todo} />}
+      {(data) => <Content data={data} />}
     </FetchView>
   );
 };
